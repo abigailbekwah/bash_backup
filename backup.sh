@@ -57,8 +57,27 @@ fi
         #NAME only folder name-> clean
         Src="/home/Abi/Documents"
         tar -czf "$Documents" -c "$(dirname "$SOURCE")"
+
 # 6. List backup newest first, skip the first KEEP first, delete the rest
-    ls -1t "$DEST"/Documents-*.tar.gz | tail -n +$((KEEP + 1)) | while IFS= read -r old; do
-rm -- "$old"
+    ls -1t "$DEST"/Documents-*.tar.gz |sor -r| tail -n +$((KEEP + 1)) | while IFS= read -r old; do
+    rm -- "$old"
 done
+# 7. Check for unknown options (handled automatically by getopts / \?)
+# 8. Check if KEEP is a positive number (1 or greater)
+if ! [[ "$KEEP_DAYS" =~ ^[1-9][0-9]*$ ]]; then
+    echo "Error: KEEP must be a positive number (1 >)." >&2
+    exit 1
+fi
+
+# 9. Check if source was provided
+if [ -z "$SOURCE_DIR" ]; then
+    echo "Error: Missing source folder." >&2
+    exit 1 
+fi
+# 10. Check if source exists AND is actually a directory (folder)
+if [ ! -d "$SOURCE_DIR" ]; then
+    echo "Error: '$SOURCE_DIR' is not a valid directory or a folder." >&2
+    exit 1
+fi
+
 
