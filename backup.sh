@@ -57,4 +57,8 @@ fi
         #NAME only folder name-> clean
         Src="/home/Abi/Documents"
         tar -czf "$Documents" -c "$(dirname "$SOURCE")"
+# 6. List backup newest first, skip the first KEEP first, delete the rest
+    ls -1t "$DEST"/Documents-*.tar.gz | tail -n +$((KEEP + 1)) | while IFS= read -r old; do
+rm -- "$old"
+done
 
