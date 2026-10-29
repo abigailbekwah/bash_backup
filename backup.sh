@@ -30,4 +30,31 @@ else
     exit 1
 fi
 
+# 4. function show help
+    show_help() {
+        echo "Usage: backup.sh [ -d DEST] [ -k KEEP] SOURCE"
+        echo " SOURCE folder to backup"
+        echo " -d DEST where to save backup"
+        echo " -k KEEP how many backups to keep"
+        echo " -h show this help"
+
+        ]
+    print_usage
+        echo "Usage: backup.sh [-d DEST] [-k KEEP] SOURCE"
+            exit 0
+
+            ;;
+        
+            echo "Invalid option. Use -h for help." >&2
+            exit 1
+
+# 5. Naming the folder,timestamp and packing it cleanly
+    DATE=$(date +"%y%M%d-%h%m%s")
+    NAME=$(basename "$SOURCE")
+    FILE="DEST/${NAME}-${NAME}-{DATE}.tar.gz"
+
+        echo "Backing up $SOURCE to $FILE..."
+        #NAME only folder name-> clean
+        Src="/home/Abi/Documents"
+        tar -czf "$Documents" -c "$(dirname "$SOURCE")"
 
